@@ -5,12 +5,15 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import ProtectedRoute from "@/components/ProtectedRoute";
+import MembershipGuard from "@/components/MembershipGuard";
 import Index from "./pages/Index";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ForgotPassword from "./pages/ForgotPassword";
 import Dashboard from "./pages/Dashboard";
 import ResetPassword from "./pages/ResetPassword";
+import MembershipCheckout from "./pages/MembershipCheckout";
+import MembershipRenew from "./pages/MembershipRenew";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -29,10 +32,28 @@ const App = () => (
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/reset-password" element={<ResetPassword />} />
             <Route
+              path="/membership/checkout"
+              element={
+                <ProtectedRoute>
+                  <MembershipCheckout />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/membership/renew"
+              element={
+                <ProtectedRoute>
+                  <MembershipRenew />
+                </ProtectedRoute>
+              }
+            />
+            <Route
               path="/dashboard"
               element={
                 <ProtectedRoute>
-                  <Dashboard />
+                  <MembershipGuard>
+                    <Dashboard />
+                  </MembershipGuard>
                 </ProtectedRoute>
               }
             />
