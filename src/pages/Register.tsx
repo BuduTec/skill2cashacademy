@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -11,6 +11,8 @@ import { Eye, EyeOff, UserPlus } from "lucide-react";
 const Register = () => {
   const { signUp } = useAuth();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const tier = searchParams.get("tier");
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -35,7 +37,7 @@ const Register = () => {
       toast({ title: "Registration failed", description: error.message, variant: "destructive" });
     } else {
       toast({ title: "Check your email", description: "We sent you a confirmation link." });
-      navigate("/login");
+      navigate(tier ? `/membership/checkout?tier=${tier}` : "/login");
     }
   };
 

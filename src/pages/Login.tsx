@@ -24,6 +24,7 @@ const Login = () => {
     if (error) {
       toast({ title: "Login failed", description: error.message, variant: "destructive" });
     } else {
+      // MembershipGuard on /dashboard will handle redirect if no active membership
       navigate("/dashboard");
     }
   };
