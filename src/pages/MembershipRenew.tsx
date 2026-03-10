@@ -1,11 +1,30 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { AlertCircle, ArrowRight } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
+import { supabase } from "@/integrations/supabase/client";
 
 const MembershipRenew = () => {
-  const { profile } = useAuth();
+  const { user } = useAuth();
+  const [tier, setTier] = useState("referrer");
+
+  useEffect(() => {
+    const fetchLastTier = async () => {
+      if (!user) return;
+      const { data } = await supabase
+        .from("memberships")
+        .select("tier")
+        .eq("user_id", user.id)
+        .order("expiry_date", { ascending: false })
+        .limit(1);
+      if (data && data.length > 0) {
+        setTier(data[0].tier);
+      }
+    };
+    fetchLastTier();
+  }, [user]);
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-primary p-4">
@@ -20,7 +39,7 @@ const MembershipRenew = () => {
           <p className="text-muted-foreground">
             Your membership has expired. Renew now to regain access to your dashboard and all features.
           </p>
-          <Link to={`/membership/checkout?tier=${profile?.role || "referrer"}`}>
+          <Link to={`/membership/checkout?tier=${tier}`}>
             <Button className="w-full bg-accent text-accent-foreground hover:bg-accent/90" size="lg">
               Renew Membership <ArrowRight className="ml-2 h-4 w-4" />
             </Button>

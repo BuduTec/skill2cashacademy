@@ -78,6 +78,10 @@ const MembershipCheckout = () => {
       toast({ title: "Error saving membership", description: error.message, variant: "destructive" });
       return false;
     }
+
+    // Update profile role to match tier
+    await supabase.from("profiles").update({ role: tierKey }).eq("id", user.id);
+
     return true;
   };
 
