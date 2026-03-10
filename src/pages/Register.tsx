@@ -31,7 +31,7 @@ const Register = () => {
       return;
     }
     setLoading(true);
-    const { error } = await signUp(email, password, fullName);
+    const { error } = await signUp(email, password, fullName, tier || undefined);
     setLoading(false);
     if (error) {
       toast({ title: "Registration failed", description: error.message, variant: "destructive" });
