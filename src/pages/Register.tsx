@@ -37,7 +37,7 @@ const Register = () => {
       toast({ title: "Registration failed", description: error.message, variant: "destructive" });
     } else {
       toast({ title: "Check your email", description: "We sent you a confirmation link." });
-      navigate("/login");
+      navigate(tier ? `/membership/checkout?tier=${tier}` : "/login");
     }
   };
 
