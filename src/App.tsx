@@ -14,6 +14,8 @@ import Dashboard from "./pages/Dashboard";
 import ResetPassword from "./pages/ResetPassword";
 import MembershipCheckout from "./pages/MembershipCheckout";
 import MembershipRenew from "./pages/MembershipRenew";
+import Courses from "./pages/Courses";
+import CourseDetail from "./pages/CourseDetail";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
