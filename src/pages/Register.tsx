@@ -11,6 +11,8 @@ import { Eye, EyeOff, UserPlus } from "lucide-react";
 const Register = () => {
   const { signUp } = useAuth();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const tier = searchParams.get("tier");
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
