@@ -16,6 +16,7 @@ import MembershipCheckout from "./pages/MembershipCheckout";
 import MembershipRenew from "./pages/MembershipRenew";
 import Courses from "./pages/Courses";
 import CourseDetail from "./pages/CourseDetail";
+import CourseLearn from "./pages/CourseLearn";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
