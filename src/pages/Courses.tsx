@@ -54,8 +54,19 @@ const Courses = () => {
           .in("id", instructorIds);
 
         const profileMap = new Map(profiles?.map((p: any) => [p.id, p.full_name]) || []);
+
+        // Fetch enrollment counts
+        const { data: counts } = await supabase
+          .from("course_enrollment_counts")
+          .select("course_id, enrolled_count");
+        const countMap = new Map(counts?.map((c: any) => [c.course_id, c.enrolled_count]) || []);
+
         setCourses(
-          data.map((c: any) => ({ ...c, instructor_name: profileMap.get(c.instructor_id) || "Instructor" }))
+          data.map((c: any) => ({
+            ...c,
+            instructor_name: profileMap.get(c.instructor_id) || "Instructor",
+            enrolled_count: countMap.get(c.id) || 0,
+          }))
         );
       }
       setLoading(false);
