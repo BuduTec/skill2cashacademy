@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Search, BookOpen, ArrowRight, Menu, X } from "lucide-react";
+import { Search, BookOpen, ArrowRight, Menu, X, Users } from "lucide-react";
 
 interface Course {
   id: string;
@@ -19,6 +19,7 @@ interface Course {
   level: string;
   instructor_id: string;
   instructor_name?: string;
+  enrolled_count?: number;
   published: boolean;
 }
 
@@ -54,8 +55,19 @@ const Courses = () => {
           .in("id", instructorIds);
 
         const profileMap = new Map(profiles?.map((p: any) => [p.id, p.full_name]) || []);
+
+        // Fetch enrollment counts
+        const { data: counts } = await supabase
+          .from("course_enrollment_counts")
+          .select("course_id, enrolled_count");
+        const countMap = new Map(counts?.map((c: any) => [c.course_id, c.enrolled_count]) || []);
+
         setCourses(
-          data.map((c: any) => ({ ...c, instructor_name: profileMap.get(c.instructor_id) || "Instructor" }))
+          data.map((c: any) => ({
+            ...c,
+            instructor_name: profileMap.get(c.instructor_id) || "Instructor",
+            enrolled_count: countMap.get(c.id) || 0,
+          }))
         );
       }
       setLoading(false);
@@ -222,6 +234,11 @@ const Courses = () => {
                         {course.title}
                       </h3>
                       <p className="mt-1 text-sm text-muted-foreground">{course.instructor_name}</p>
+                      {(course.enrolled_count ?? 0) > 0 && (
+                        <p className="mt-1 flex items-center gap-1 text-xs text-muted-foreground">
+                          <Users className="h-3 w-3" /> {course.enrolled_count} students
+                        </p>
+                      )}
                       <div className="mt-4 flex items-center justify-between">
                         <span className="font-heading text-xl font-bold text-card-foreground">
                           ₦{course.price?.toLocaleString()}

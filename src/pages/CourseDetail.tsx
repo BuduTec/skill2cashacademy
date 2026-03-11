@@ -380,7 +380,7 @@ const CourseDetail = () => {
               </div>
 
               {enrolled ? (
-                <Link to="/dashboard">
+                <Link to={`/courses/${course.slug}/learn`}>
                   <Button className="w-full bg-accent text-accent-foreground hover:bg-accent/90" size="lg">
                     Continue Learning <BookOpen className="ml-2 h-4 w-4" />
                   </Button>

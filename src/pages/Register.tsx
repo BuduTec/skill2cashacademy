@@ -35,10 +35,10 @@ const Register = () => {
     setLoading(false);
     if (error) {
       toast({ title: "Registration failed", description: error.message, variant: "destructive" });
-    } else {
-      toast({ title: "Check your email", description: "We sent you a confirmation link." });
-      navigate(tier ? `/membership/checkout?tier=${tier}` : "/login");
+      return;
     }
+    toast({ title: "Account created!", description: "Check your email for a confirmation link." });
+    navigate(tier ? `/membership/checkout?tier=${tier}` : "/login");
   };
 
   return (
