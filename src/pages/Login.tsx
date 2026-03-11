@@ -1,12 +1,22 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
+import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "@/hooks/use-toast";
 import { Eye, EyeOff, LogIn } from "lucide-react";
+
+const roleToDashboard = (role: string): string => {
+  switch (role) {
+    case "co_owner": return "/dashboard/co-owner";
+    case "white_label_owner": return "/dashboard/coming-soon";
+    case "referrer": return "/dashboard/coming-soon";
+    default: return "/dashboard";
+  }
+};
 
 const Login = () => {
   const { signIn } = useAuth();
@@ -24,8 +34,18 @@ const Login = () => {
     if (error) {
       toast({ title: "Login failed", description: error.message, variant: "destructive" });
     } else {
-      // MembershipGuard on /dashboard will handle redirect if no active membership
-      navigate("/dashboard");
+      // Fetch profile role to determine dashboard
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        const { data: prof } = await supabase
+          .from("profiles")
+          .select("role")
+          .eq("id", user.id)
+          .single();
+        navigate(roleToDashboard(prof?.role || "student"));
+      } else {
+        navigate("/dashboard");
+      }
     }
   };
 
