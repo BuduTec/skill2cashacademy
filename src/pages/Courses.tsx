@@ -19,6 +19,7 @@ interface Course {
   level: string;
   instructor_id: string;
   instructor_name?: string;
+  enrolled_count?: number;
   published: boolean;
 }
 
