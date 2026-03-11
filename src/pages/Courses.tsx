@@ -234,6 +234,11 @@ const Courses = () => {
                         {course.title}
                       </h3>
                       <p className="mt-1 text-sm text-muted-foreground">{course.instructor_name}</p>
+                      {(course.enrolled_count ?? 0) > 0 && (
+                        <p className="mt-1 flex items-center gap-1 text-xs text-muted-foreground">
+                          <Users className="h-3 w-3" /> {course.enrolled_count} students
+                        </p>
+                      )}
                       <div className="mt-4 flex items-center justify-between">
                         <span className="font-heading text-xl font-bold text-card-foreground">
                           ₦{course.price?.toLocaleString()}
