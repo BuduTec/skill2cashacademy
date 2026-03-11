@@ -11,6 +11,8 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ForgotPassword from "./pages/ForgotPassword";
 import Dashboard from "./pages/Dashboard";
+import CoOwnerDashboard from "./pages/CoOwnerDashboard";
+import ComingSoon from "./pages/ComingSoon";
 import ResetPassword from "./pages/ResetPassword";
 import MembershipCheckout from "./pages/MembershipCheckout";
 import MembershipRenew from "./pages/MembershipRenew";
@@ -66,6 +68,26 @@ const App = () => (
                 <ProtectedRoute>
                   <MembershipGuard>
                     <Dashboard />
+                  </MembershipGuard>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/dashboard/co-owner"
+              element={
+                <ProtectedRoute allowedRoles={["co_owner"]}>
+                  <MembershipGuard>
+                    <CoOwnerDashboard />
+                  </MembershipGuard>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/dashboard/coming-soon"
+              element={
+                <ProtectedRoute allowedRoles={["referrer", "white_label_owner"]}>
+                  <MembershipGuard>
+                    <ComingSoon />
                   </MembershipGuard>
                 </ProtectedRoute>
               }
