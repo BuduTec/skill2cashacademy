@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "@/hooks/use-toast";
 import { Eye, EyeOff, UserPlus } from "lucide-react";
+import GoogleSignInButton from "@/components/GoogleSignInButton";
 
 const Register = () => {
   const { signUp } = useAuth();
@@ -121,6 +122,18 @@ const Register = () => {
                   </>
                 )}
               </Button>
+
+              <div className="relative w-full">
+                <div className="absolute inset-0 flex items-center">
+                  <span className="w-full border-t border-border" />
+                </div>
+                <div className="relative flex justify-center text-xs uppercase">
+                  <span className="bg-card px-2 text-muted-foreground">or</span>
+                </div>
+              </div>
+
+              <GoogleSignInButton />
+
               <p className="text-sm text-muted-foreground">
                 Already have an account?{" "}
                 <Link to="/login" className="text-accent font-medium hover:underline">

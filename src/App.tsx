@@ -20,6 +20,8 @@ import Courses from "./pages/Courses";
 import CourseDetail from "./pages/CourseDetail";
 import CourseLearn from "./pages/CourseLearn";
 import NotFound from "./pages/NotFound";
+import AuthCallback from "./pages/AuthCallback";
+import WhitelabelDashboard from "./pages/WhitelabelDashboard";
 
 const queryClient = new QueryClient();
 
@@ -44,6 +46,7 @@ const App = () => (
                 </ProtectedRoute>
               }
             />
+            <Route path="/auth/callback" element={<AuthCallback />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/reset-password" element={<ResetPassword />} />
             <Route
@@ -83,9 +86,19 @@ const App = () => (
               }
             />
             <Route
+              path="/dashboard/whitelabel"
+              element={
+                <ProtectedRoute allowedRoles={["whitelabel_owner"]}>
+                  <MembershipGuard>
+                    <WhitelabelDashboard />
+                  </MembershipGuard>
+                </ProtectedRoute>
+              }
+            />
+            <Route
               path="/dashboard/coming-soon"
               element={
-                <ProtectedRoute allowedRoles={["referrer", "white_label_owner"]}>
+                <ProtectedRoute allowedRoles={["referrer", "white_label_owner", "whitelabel_owner"]}>
                   <MembershipGuard>
                     <ComingSoon />
                   </MembershipGuard>

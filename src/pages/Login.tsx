@@ -8,11 +8,13 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "@/hooks/use-toast";
 import { Eye, EyeOff, LogIn } from "lucide-react";
+import GoogleSignInButton from "@/components/GoogleSignInButton";
 
 const roleToDashboard = (role: string): string => {
   switch (role) {
+    case "admin": return "/dashboard/admin";
     case "co_owner": return "/dashboard/co-owner";
-    case "white_label_owner": return "/dashboard/coming-soon";
+    case "whitelabel_owner": return "/dashboard/whitelabel";
     case "referrer": return "/dashboard/coming-soon";
     default: return "/dashboard";
   }
@@ -113,6 +115,18 @@ const Login = () => {
                   </>
                 )}
               </Button>
+
+              <div className="relative w-full">
+                <div className="absolute inset-0 flex items-center">
+                  <span className="w-full border-t border-border" />
+                </div>
+                <div className="relative flex justify-center text-xs uppercase">
+                  <span className="bg-card px-2 text-muted-foreground">or</span>
+                </div>
+              </div>
+
+              <GoogleSignInButton />
+
               <p className="text-sm text-muted-foreground">
                 Don't have an account?{" "}
                 <Link to="/register" className="text-accent font-medium hover:underline">
