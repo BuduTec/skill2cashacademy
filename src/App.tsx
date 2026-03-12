@@ -86,9 +86,19 @@ const App = () => (
               }
             />
             <Route
+              path="/dashboard/whitelabel"
+              element={
+                <ProtectedRoute allowedRoles={["whitelabel_owner"]}>
+                  <MembershipGuard>
+                    <WhitelabelDashboard />
+                  </MembershipGuard>
+                </ProtectedRoute>
+              }
+            />
+            <Route
               path="/dashboard/coming-soon"
               element={
-                <ProtectedRoute allowedRoles={["referrer", "white_label_owner"]}>
+                <ProtectedRoute allowedRoles={["referrer", "white_label_owner", "whitelabel_owner"]}>
                   <MembershipGuard>
                     <ComingSoon />
                   </MembershipGuard>

@@ -140,7 +140,7 @@ const MembershipCheckout = () => {
           setLoading(null);
           if (success) {
             toast({ title: "Payment successful!", description: "Welcome aboard!" });
-            const dest = tierKey === "co_owner" ? "/dashboard/co-owner" : tierKey === "white_label_owner" || tierKey === "referrer" ? "/dashboard/coming-soon" : "/dashboard";
+            const dest = tierKey === "co_owner" ? "/dashboard/co-owner" : tierKey === "whitelabel_owner" ? "/dashboard/whitelabel" : tierKey === "referrer" ? "/dashboard/coming-soon" : "/dashboard";
             navigate(dest);
           }
         } else {
