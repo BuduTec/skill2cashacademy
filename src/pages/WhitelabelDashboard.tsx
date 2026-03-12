@@ -434,7 +434,7 @@ const WhitelabelDashboard = () => {
   // ── Students ──
   const fetchStudents = async () => {
     setStudentsLoading(true);
-    const { data } = await supabase.rpc("get_whitelabel_students", { owner_uuid: user!.id }).catch(() => ({ data: null }));
+    const { data } = await supabase.rpc("get_whitelabel_students", { owner_uuid: user!.id });
 
     // Fallback: manual query
     if (!data) {
