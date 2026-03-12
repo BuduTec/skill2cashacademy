@@ -46,6 +46,7 @@ const App = () => (
                 </ProtectedRoute>
               }
             />
+            <Route path="/auth/callback" element={<AuthCallback />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/reset-password" element={<ResetPassword />} />
             <Route
