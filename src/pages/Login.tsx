@@ -11,8 +11,9 @@ import { Eye, EyeOff, LogIn } from "lucide-react";
 
 const roleToDashboard = (role: string): string => {
   switch (role) {
+    case "admin": return "/dashboard/admin";
     case "co_owner": return "/dashboard/co-owner";
-    case "white_label_owner": return "/dashboard/coming-soon";
+    case "whitelabel_owner": return "/dashboard/whitelabel";
     case "referrer": return "/dashboard/coming-soon";
     default: return "/dashboard";
   }
