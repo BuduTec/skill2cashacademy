@@ -5,8 +5,9 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { LogOut, BookOpen, PlayCircle, Award } from "lucide-react";
-import { useNavigate, Link } from "react-router-dom";
+import { BookOpen, PlayCircle, Award } from "lucide-react";
+import { Link } from "react-router-dom";
+import DashboardHeader from "@/components/DashboardHeader";
 
 interface EnrolledCourse {
   id: string;
