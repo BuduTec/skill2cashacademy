@@ -27,8 +27,7 @@ const tierLabels: Record<string, string> = {
 };
 
 const Dashboard = () => {
-  const { user, profile, signOut } = useAuth();
-  const navigate = useNavigate();
+  const { user, profile } = useAuth();
   const [enrolledCourses, setEnrolledCourses] = useState<EnrolledCourse[]>([]);
   const [membershipTier, setMembershipTier] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
