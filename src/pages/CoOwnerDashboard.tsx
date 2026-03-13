@@ -16,6 +16,7 @@ import {
   LogOut, Store, BookOpen, Users, DollarSign, Link2, Copy, Save, Loader2,
 } from "lucide-react";
 import { useNavigate, Link } from "react-router-dom";
+import DashboardHeader from "@/components/DashboardHeader";
 
 interface StoreRecord {
   id?: string;
