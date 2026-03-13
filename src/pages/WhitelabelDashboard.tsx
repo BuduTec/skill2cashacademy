@@ -28,6 +28,7 @@ import {
 } from "lucide-react";
 import { useNavigate, Link } from "react-router-dom";
 import DashboardHeader from "@/components/DashboardHeader";
+import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 
 // ── Types ──
 interface WhitelabelSpace {
