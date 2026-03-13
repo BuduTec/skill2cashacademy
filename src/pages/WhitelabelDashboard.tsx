@@ -27,7 +27,7 @@ import {
   Save, Loader2, Plus, Trash2, Edit, Upload, Eye, GripVertical,
 } from "lucide-react";
 import { useNavigate, Link } from "react-router-dom";
-import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
+import DashboardHeader from "@/components/DashboardHeader";
 
 // ── Types ──
 interface WhitelabelSpace {
