@@ -21,7 +21,7 @@ interface EnrolledCourse {
 }
 
 const tierLabels: Record<string, string> = {
-  referrer: "Referrer",
+  referrer: "Affiliate",
   co_owner: "Co-Owner",
   white_label_owner: "White-Label Owner",
 };
