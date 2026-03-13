@@ -27,6 +27,7 @@ import {
   Save, Loader2, Plus, Trash2, Edit, Upload, Eye, GripVertical,
 } from "lucide-react";
 import { useNavigate, Link } from "react-router-dom";
+import DashboardHeader from "@/components/DashboardHeader";
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 
 // ── Types ──
@@ -603,20 +604,7 @@ const WhitelabelDashboard = () => {
   // ── Render ──
   return (
     <div className="min-h-screen bg-background">
-      <header className="border-b bg-card">
-        <div className="container flex h-16 items-center justify-between">
-          <Link to="/" className="font-heading text-xl font-bold">
-            Skill<span className="text-accent">2</span>Cash
-          </Link>
-          <div className="flex items-center gap-4">
-            <Badge className="bg-accent text-accent-foreground">White-Label Owner</Badge>
-            <span className="text-sm text-muted-foreground hidden sm:inline">{user?.email}</span>
-            <Button variant="outline" size="sm" onClick={handleSignOut}>
-              <LogOut className="mr-2 h-4 w-4" /> Sign Out
-            </Button>
-          </div>
-        </div>
-      </header>
+      <DashboardHeader />
 
       <main className="container py-8">
         <h1 className="font-heading text-3xl font-bold mb-6">

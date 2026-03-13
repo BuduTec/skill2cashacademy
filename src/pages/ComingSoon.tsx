@@ -38,7 +38,7 @@ const ComingSoon = () => {
             </div>
             <h1 className="font-heading text-2xl font-bold">Coming Soon</h1>
             <p className="text-muted-foreground">
-              Your {profile?.role === "white_label_owner" ? "White-Label Owner" : "Referrer"} dashboard is being built. 
+              Your {profile?.role === "white_label_owner" ? "White-Label Owner" : "Affiliate"} dashboard is being built. 
               We'll notify you when it's ready!
             </p>
             <Link to="/courses">

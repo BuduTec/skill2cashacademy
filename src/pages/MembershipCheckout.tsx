@@ -10,7 +10,7 @@ import { toast } from "@/hooks/use-toast";
 
 const tierData: Record<string, { name: string; price: number; priceLabel: string; benefits: string[] }> = {
   referrer: {
-    name: "Referrer",
+    name: "Affiliate",
     price: 3000,
     priceLabel: "₦3,000/year",
     benefits: [

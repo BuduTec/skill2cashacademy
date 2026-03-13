@@ -19,7 +19,7 @@ import { useState } from "react";
 
 const tiers = [
   {
-    name: "Referrer",
+    name: "Affiliate",
     price: "₦3,000",
     period: "/year",
     popular: false,
