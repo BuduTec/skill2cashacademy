@@ -6,7 +6,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Search, BookOpen, ArrowRight, Menu, X, Users } from "lucide-react";
+import { Search, BookOpen, ArrowRight, Menu, X, Users, Heart } from "lucide-react";
+import { toast } from "@/hooks/use-toast";
 
 interface Course {
   id: string;
@@ -37,6 +38,7 @@ const Courses = () => {
   const [categoryFilter, setCategoryFilter] = useState("all");
   const [levelFilter, setLevelFilter] = useState("all");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [wishlistIds, setWishlistIds] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -47,16 +49,13 @@ const Courses = () => {
         .order("created_at", { ascending: false });
 
       if (data) {
-        // Fetch instructor names
         const instructorIds = [...new Set(data.map((c: any) => c.instructor_id))];
         const { data: profiles } = await supabase
           .from("profiles")
           .select("id, full_name")
           .in("id", instructorIds);
-
         const profileMap = new Map(profiles?.map((p: any) => [p.id, p.full_name]) || []);
 
-        // Fetch enrollment counts
         const { data: counts } = await supabase
           .from("course_enrollment_counts")
           .select("course_id, enrolled_count");
@@ -74,6 +73,29 @@ const Courses = () => {
     };
     fetchCourses();
   }, []);
+
+  // Fetch wishlist IDs for logged-in user
+  useEffect(() => {
+    if (!user) return;
+    const fetchWl = async () => {
+      const { data } = await supabase.from("wishlists").select("course_id").eq("student_id", user.id);
+      setWishlistIds(new Set(data?.map((w: any) => w.course_id) || []));
+    };
+    fetchWl();
+  }, [user]);
+
+  const toggleWishlist = async (courseId: string, e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!user) { toast({ title: "Please sign in to add to wishlist", variant: "destructive" }); return; }
+    if (wishlistIds.has(courseId)) {
+      await supabase.from("wishlists").delete().eq("student_id", user.id).eq("course_id", courseId);
+      setWishlistIds((prev) => { const n = new Set(prev); n.delete(courseId); return n; });
+    } else {
+      await supabase.from("wishlists").insert({ student_id: user.id, course_id: courseId });
+      setWishlistIds((prev) => new Set(prev).add(courseId));
+    }
+  };
 
   const categories = useMemo(
     () => [...new Set(courses.map((c) => c.category).filter(Boolean))],
@@ -208,7 +230,13 @@ const Courses = () => {
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {filtered.map((course) => (
                 <Link key={course.id} to={`/courses/${course.slug}`} className="group">
-                  <div className="overflow-hidden rounded-xl border bg-card transition-all hover:shadow-lg hover:border-accent/30">
+                  <div className="overflow-hidden rounded-xl border bg-card transition-all hover:shadow-lg hover:border-accent/30 relative">
+                    <button
+                      onClick={(e) => toggleWishlist(course.id, e)}
+                      className="absolute top-3 right-3 z-10 p-1.5 rounded-full bg-card/80 backdrop-blur hover:bg-card transition-colors"
+                    >
+                      <Heart className={`h-5 w-5 ${wishlistIds.has(course.id) ? "fill-destructive text-destructive" : "text-muted-foreground"}`} />
+                    </button>
                     <div className="aspect-video bg-muted overflow-hidden">
                       {course.thumbnail_url ? (
                         <img
