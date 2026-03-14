@@ -24,6 +24,7 @@ import NotFound from "./pages/NotFound";
 import AuthCallback from "./pages/AuthCallback";
 import WhitelabelDashboard from "./pages/WhitelabelDashboard";
 import AffiliateDashboard from "./pages/AffiliateDashboard";
+import StorePage from "./pages/StorePage";
 
 const queryClient = new QueryClient();
 
