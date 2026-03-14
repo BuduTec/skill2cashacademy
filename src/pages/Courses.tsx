@@ -48,16 +48,13 @@ const Courses = () => {
         .order("created_at", { ascending: false });
 
       if (data) {
-        // Fetch instructor names
         const instructorIds = [...new Set(data.map((c: any) => c.instructor_id))];
         const { data: profiles } = await supabase
           .from("profiles")
           .select("id, full_name")
           .in("id", instructorIds);
-
         const profileMap = new Map(profiles?.map((p: any) => [p.id, p.full_name]) || []);
 
-        // Fetch enrollment counts
         const { data: counts } = await supabase
           .from("course_enrollment_counts")
           .select("course_id, enrolled_count");
@@ -75,6 +72,29 @@ const Courses = () => {
     };
     fetchCourses();
   }, []);
+
+  // Fetch wishlist IDs for logged-in user
+  useEffect(() => {
+    if (!user) return;
+    const fetchWl = async () => {
+      const { data } = await supabase.from("wishlists").select("course_id").eq("student_id", user.id);
+      setWishlistIds(new Set(data?.map((w: any) => w.course_id) || []));
+    };
+    fetchWl();
+  }, [user]);
+
+  const toggleWishlist = async (courseId: string, e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!user) { toast({ title: "Please sign in to add to wishlist", variant: "destructive" }); return; }
+    if (wishlistIds.has(courseId)) {
+      await supabase.from("wishlists").delete().eq("student_id", user.id).eq("course_id", courseId);
+      setWishlistIds((prev) => { const n = new Set(prev); n.delete(courseId); return n; });
+    } else {
+      await supabase.from("wishlists").insert({ student_id: user.id, course_id: courseId });
+      setWishlistIds((prev) => new Set(prev).add(courseId));
+    }
+  };
 
   const categories = useMemo(
     () => [...new Set(courses.map((c) => c.category).filter(Boolean))],
