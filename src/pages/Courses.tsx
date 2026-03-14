@@ -229,7 +229,13 @@ const Courses = () => {
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {filtered.map((course) => (
                 <Link key={course.id} to={`/courses/${course.slug}`} className="group">
-                  <div className="overflow-hidden rounded-xl border bg-card transition-all hover:shadow-lg hover:border-accent/30">
+                  <div className="overflow-hidden rounded-xl border bg-card transition-all hover:shadow-lg hover:border-accent/30 relative">
+                    <button
+                      onClick={(e) => toggleWishlist(course.id, e)}
+                      className="absolute top-3 right-3 z-10 p-1.5 rounded-full bg-card/80 backdrop-blur hover:bg-card transition-colors"
+                    >
+                      <Heart className={`h-5 w-5 ${wishlistIds.has(course.id) ? "fill-destructive text-destructive" : "text-muted-foreground"}`} />
+                    </button>
                     <div className="aspect-video bg-muted overflow-hidden">
                       {course.thumbnail_url ? (
                         <img
