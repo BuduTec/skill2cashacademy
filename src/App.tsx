@@ -117,6 +117,7 @@ const App = () => (
                   </ProtectedRoute>
                 }
               />
+              <Route path="/store/:store_slug" element={<StorePage />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </AffiliateProvider>
