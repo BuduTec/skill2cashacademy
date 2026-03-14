@@ -37,6 +37,7 @@ const Courses = () => {
   const [categoryFilter, setCategoryFilter] = useState("all");
   const [levelFilter, setLevelFilter] = useState("all");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [wishlistIds, setWishlistIds] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     const fetchCourses = async () => {
